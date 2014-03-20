@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.smartdevicelinktester"
+    android:versionCode="1"
+    android:versionName="1.1 (SDLT18)" >
+    
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <!-- Required to pair Bluetooth devices -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Required to check if WiFi is enabled -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Required to make the device stay awake while doing XML tests -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    
+   	<uses-sdk android:minSdkVersion="8" android:targetSdkVersion="13" />
+    
+    <application
+        android:debuggable="true"
+        android:icon="@drawable/fiesta"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Black" >
+        <activity
+            android:name=".activity.SmartDeviceLinkTester"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name=".service.ProxyService" >
+        </service>
+
+        <receiver android:name=".receivers.smartdevicelinkReceiver" >
+            <intent-filter>
+                <action android:name="android.bluetooth.device.action.ACL_CONNECTED" />
+                <action android:name="android.bluetooth.device.action.ACL_DISCONNECTED" />
+                <action android:name="android.media.AUDIO_BECOMING_NOISY" />
+                <action android:name="android.intent.action.MEDIA_BUTTON" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".activity.SoftButtonsListActivity"
+            android:label="@string/title_activity_soft_buttons_list" android:theme="@android:style/Theme.Dialog">
+        </activity>
+
+        <activity
+            android:name=".activity.SoftButtonEditActivity"
+            android:label="@string/title_activity_soft_button_edit"
+            android:theme="@android:style/Theme.Dialog" >
+        </activity>
+    </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" >
+    </uses-permission>
+
+</manifest>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/itemRoot"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="10dip"
+    android:layout_marginRight="10dip"
+    android:minWidth="300px"
+    android:orientation="vertical"
+    android:paddingLeft="20dip"
+    android:paddingRight="20dip" >
+    
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TTSChunks (comma-separated)"
+        android:textStyle="bold" >
+
+    </TextView>
+
+    <EditText
+        android:id="@+id/txtTtsChunks"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:freezesText="true"
+        android:text="TTSChunk1,TTSChunk2,AnotherTTSChunk"
+        android:visibility="visible" >
+
+    </EditText>
+
+    <Button
+        android:id="@+id/alertManeuver_btnSoftButtons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/softButtons" />
+
+</LinearLayout>

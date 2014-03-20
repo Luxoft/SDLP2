@@ -1,0 +1,305 @@
+find_package(Gstreamer-1.0 REQUIRED)
+find_package(Glib-2.0 REQUIRED)
+
+# required to find 'glibconfig.h'
+find_package(PkgConfig)
+pkg_check_modules(GLIB2 REQUIRED glib-2.0)
+add_definitions(${GLIB2_CFLAGS})
+
+include_directories (
+  ./include/
+  ../utils/include/
+  ../formatters/include/
+  ../protocol_handler/include/
+  ../smart_objects/include/
+  ../hmi_message_handler/include
+  ../mobile_message_handler/include
+  ../audio_manager/include
+  ../connection_handler/include/
+  ../config_profile/include/
+  ../request_watchdog/include/
+  ../audio_manager/include/
+  ../transport_manager/include/
+  ./../application_manager_profile_manager_interface/include
+  ../../thirdPartyLibs/jsoncpp/include/
+  ../../thirdPartyLibs/encryption/include/
+  /usr/lib/i386-linux-gnu/glib-2.0/include
+  /usr/lib/x86_64-linux-gnu/glib-2.0/include/
+  ${GSTREAMER_gst_INCLUDE_DIR}
+  ${GLIB_glib_2_INCLUDE_DIR}
+  ${CMAKE_BINARY_DIR}/src/components/
+)
+
+set (SOURCES
+./src/application_manager_impl.cc
+./src/message.cc
+./src/message_chaining.cc
+./src/application_impl.cc
+./src/mobile_command_factory.cc
+./src/message_helper.cc
+./src/hmi_command_factory.cc
+./src/hmi_capabilities.cc
+./src/from_mobile_thread_impl.cc
+./src/to_mobile_thread_impl.cc
+./src/from_hmh_thread_impl.cc
+./src/to_hmh_thread_impl.cc
+./src/application_data_impl.cc
+./src/request_controller.cc
+)
+
+set (POLICIES_MANAGER
+./src/policies_manager/policies_manager.cc
+)
+
+set (EVENT_ENGINE
+./src/event_engine/event.cc
+./src/event_engine/event_dispatcher.cc
+./src/event_engine/event_observer.cc
+)
+
+set (MOBILE_COMMANDS_SOURCES
+./src/commands/command_impl.cc
+./src/commands/command_request_impl.cc
+./src/commands/command_response_impl.cc
+./src/commands/command_notification_impl.cc
+./src/commands/mobile/add_command_request.cc
+./src/commands/mobile/add_command_response.cc
+./src/commands/mobile/add_sub_menu_request.cc
+./src/commands/mobile/add_sub_menu_response.cc
+./src/commands/mobile/alert_request.cc
+./src/commands/mobile/alert_response.cc
+./src/commands/mobile/alert_maneuver_request.cc
+./src/commands/mobile/alert_maneuver_response.cc
+./src/commands/mobile/change_registration_request.cc
+./src/commands/mobile/change_registration_response.cc
+./src/commands/mobile/create_interaction_choice_set_request.cc
+./src/commands/mobile/create_interaction_choice_set_response.cc
+./src/commands/mobile/delete_command_request.cc
+./src/commands/mobile/delete_command_response.cc
+./src/commands/mobile/delete_file_request.cc
+./src/commands/mobile/delete_file_response.cc
+./src/commands/mobile/delete_interaction_choice_set_request.cc
+./src/commands/mobile/delete_interaction_choice_set_response.cc
+./src/commands/mobile/delete_sub_menu_request.cc
+./src/commands/mobile/delete_sub_menu_response.cc
+./src/commands/mobile/dial_number_request.cc
+./src/commands/mobile/encoded_sync_pdata_request.cc
+./src/commands/mobile/encoded_sync_pdata_response.cc
+./src/commands/mobile/end_audio_pass_thru_request.cc
+./src/commands/mobile/end_audio_pass_thru_response.cc
+./src/commands/mobile/generic_response.cc
+./src/commands/mobile/get_dtcs_request.cc
+./src/commands/mobile/get_dtcs_response.cc
+./src/commands/mobile/get_vehicle_data_request.cc
+./src/commands/mobile/get_vehicle_data_response.cc
+./src/commands/mobile/list_files_request.cc
+./src/commands/mobile/list_files_response.cc
+./src/commands/mobile/on_app_interface_unregistered_notification.cc
+./src/commands/mobile/on_audio_pass_thru_notification.cc
+./src/commands/mobile/on_button_event_notification.cc
+./src/commands/mobile/on_button_press_notification.cc
+./src/commands/mobile/on_driver_distraction_notification.cc
+./src/commands/mobile/on_encoded_sync_pdata_notification.cc
+./src/commands/mobile/on_hmi_status_notification.cc
+./src/commands/mobile/on_language_change_notification.cc
+./src/commands/mobile/on_command_notification.cc
+./src/commands/mobile/on_permissions_change_notification.cc
+./src/commands/mobile/on_tbt_client_state_notification.cc
+./src/commands/mobile/on_vehicle_data_notification.cc
+./src/commands/mobile/perform_audio_pass_thru_request.cc
+./src/commands/mobile/perform_audio_pass_thru_response.cc
+./src/commands/mobile/perform_interaction_request.cc
+./src/commands/mobile/perform_interaction_response.cc
+./src/commands/mobile/put_file_request.cc
+./src/commands/mobile/put_file_response.cc
+./src/commands/mobile/read_did_request.cc
+./src/commands/mobile/read_did_response.cc
+./src/commands/mobile/register_app_interface_request.cc
+./src/commands/mobile/register_app_interface_response.cc
+./src/commands/mobile/reset_global_properties_request.cc
+./src/commands/mobile/reset_global_properties_response.cc
+./src/commands/mobile/scrollable_message_request.cc
+./src/commands/mobile/scrollable_message_response.cc
+./src/commands/mobile/set_display_layout_request.cc
+./src/commands/mobile/set_display_layout_response.cc
+./src/commands/mobile/set_global_properties_request.cc
+./src/commands/mobile/set_global_properties_response.cc
+./src/commands/mobile/set_icon_request.cc
+./src/commands/mobile/set_icon_response.cc
+./src/commands/mobile/set_media_clock_timer_request.cc
+./src/commands/mobile/set_media_clock_timer_response.cc
+./src/commands/mobile/show_constant_tbt_request.cc
+./src/commands/mobile/show_constant_tbt_response.cc
+./src/commands/mobile/show_request.cc
+./src/commands/mobile/show_response.cc
+./src/commands/mobile/slider_request.cc
+./src/commands/mobile/slider_response.cc
+./src/commands/mobile/speak_request.cc
+./src/commands/mobile/speak_response.cc
+./src/commands/mobile/subscribe_button_request.cc
+./src/commands/mobile/subscribe_button_response.cc
+./src/commands/mobile/subscribe_vehicle_data_request.cc
+./src/commands/mobile/subscribe_vehicle_data_response.cc
+./src/commands/mobile/unregister_app_interface_request.cc
+./src/commands/mobile/unregister_app_interface_response.cc
+./src/commands/mobile/unsubscribe_button_request.cc
+./src/commands/mobile/unsubscribe_button_response.cc
+./src/commands/mobile/unsubscribe_vehicle_data_request.cc
+./src/commands/mobile/unsubscribe_vehicle_data_response.cc
+./src/commands/mobile/update_turn_list_request.cc
+./src/commands/mobile/update_turn_list_response.cc
+./src/commands/mobile/sync_pdata_request.cc
+./src/commands/mobile/sync_pdata_response.cc
+./src/commands/mobile/on_sync_pdata_notification.cc
+
+### PROFILE MANAGER
+./src/commands/mobile/sdlp_add_profile_request.cc
+./src/commands/mobile/sdlp_remove_profile_request.cc
+./src/commands/mobile/sdlp_load_profile_request.cc
+./src/commands/mobile/sdlp_unload_profile_request.cc
+./src/commands/mobile/sdlp_app_to_profile_request.cc
+./src/commands/mobile/sdlp_app_state_changed_request.cc
+./src/commands/mobile/sdlp_response.cc
+./src/commands/mobile/sdlp_notification.cc
+)
+
+set (HMI_COMMANDS_SOURCES
+./src/commands/hmi/request_to_hmi.cc
+./src/commands/hmi/response_from_hmi.cc
+./src/commands/hmi/notification_to_hmi.cc
+./src/commands/hmi/notification_from_hmi.cc
+./src/commands/hmi/allow_all_apps_request.cc
+./src/commands/hmi/allow_all_apps_response.cc
+./src/commands/hmi/allow_app_request.cc
+./src/commands/hmi/allow_app_response.cc
+./src/commands/hmi/activate_app_request.cc
+./src/commands/hmi/activate_app_response.cc
+./src/commands/hmi/mixing_audio_supported_request.cc
+./src/commands/hmi/mixing_audio_supported_response.cc
+./src/commands/hmi/update_app_list_request.cc
+./src/commands/hmi/update_app_list_response.cc
+./src/commands/hmi/on_update_device_list.cc
+./src/commands/hmi/update_device_list_request.cc
+./src/commands/hmi/update_device_list_response.cc
+./src/commands/hmi/on_exit_all_applications_notification.cc
+./src/commands/hmi/on_exit_application_notification.cc
+./src/commands/hmi/on_start_device_discovery.cc
+./src/commands/hmi/close_popup_request.cc
+./src/commands/hmi/close_popup_response.cc
+./src/commands/hmi/on_app_activated_notification.cc
+./src/commands/hmi/button_get_capabilities_request.cc
+./src/commands/hmi/button_get_capabilities_response.cc
+./src/commands/hmi/vr_is_ready_request.cc
+./src/commands/hmi/vr_is_ready_response.cc
+./src/commands/hmi/vr_add_command_request.cc
+./src/commands/hmi/vr_add_command_response.cc
+./src/commands/hmi/vr_delete_command_request.cc
+./src/commands/hmi/vr_delete_command_response.cc
+./src/commands/hmi/vr_change_registration_request.cc
+./src/commands/hmi/vr_change_registration_response.cc
+./src/commands/hmi/vr_get_supported_languages_request.cc
+./src/commands/hmi/vr_get_supported_languages_response.cc
+./src/commands/hmi/vr_get_language_request.cc
+./src/commands/hmi/vr_get_language_response.cc
+./src/commands/hmi/vr_get_capabilities_request.cc
+./src/commands/hmi/vr_get_capabilities_response.cc
+./src/commands/hmi/tts_is_ready_request.cc
+./src/commands/hmi/tts_is_ready_response.cc
+./src/commands/hmi/tts_change_registration_request.cc
+./src/commands/hmi/tts_change_registration_response.cc
+./src/commands/hmi/tts_get_language_request.cc
+./src/commands/hmi/tts_get_language_response.cc
+./src/commands/hmi/tts_get_supported_languages_request.cc
+./src/commands/hmi/tts_get_supported_languages_response.cc
+./src/commands/hmi/tts_stop_speaking_request.cc
+./src/commands/hmi/tts_stop_speaking_response.cc
+./src/commands/hmi/tts_speak_request.cc
+./src/commands/hmi/tts_speak_response.cc
+./src/commands/hmi/tts_set_global_properties_request.cc
+./src/commands/hmi/tts_set_global_properties_response.cc
+./src/commands/hmi/ui_add_command_request.cc
+./src/commands/hmi/ui_add_command_response.cc
+./src/commands/hmi/ui_delete_command_request.cc
+./src/commands/hmi/ui_delete_command_response.cc
+./src/commands/hmi/ui_add_submenu_request.cc
+./src/commands/hmi/ui_add_submenu_response.cc
+./src/commands/hmi/ui_delete_submenu_request.cc
+./src/commands/hmi/ui_delete_submenu_response.cc
+./src/commands/hmi/ui_get_supported_languages_request.cc
+./src/commands/hmi/ui_get_supported_languages_response.cc
+./src/commands/hmi/ui_get_language_request.cc
+./src/commands/hmi/ui_get_language_response.cc
+./src/commands/hmi/ui_get_capabilities_request.cc
+./src/commands/hmi/ui_get_capabilities_response.cc
+./src/commands/hmi/ui_change_registration_request.cc
+./src/commands/hmi/ui_change_registration_response.cc
+./src/commands/hmi/ui_show_request.cc
+./src/commands/hmi/ui_show_response.cc
+./src/commands/hmi/ui_alert_request.cc
+./src/commands/hmi/ui_alert_response.cc
+./src/commands/hmi/ui_slider_request.cc
+./src/commands/hmi/ui_scrollable_message_request.cc
+./src/commands/hmi/ui_scrollable_message_response.cc
+./src/commands/hmi/ui_set_global_properties_request.cc
+./src/commands/hmi/ui_set_global_properties_response.cc
+./src/commands/hmi/ui_slider_response.cc
+./src/commands/hmi/ui_is_ready_request.cc
+./src/commands/hmi/ui_is_ready_response.cc
+./src/commands/hmi/ui_perform_audio_pass_thru_request.cc
+./src/commands/hmi/ui_perform_audio_pass_thru_response.cc
+./src/commands/hmi/ui_end_audio_pass_thru_request.cc
+./src/commands/hmi/ui_end_audio_pass_thru_response.cc
+./src/commands/hmi/ui_perform_interaction_request.cc
+./src/commands/hmi/ui_perform_interaction_response.cc
+./src/commands/hmi/ui_set_icon_request.cc
+./src/commands/hmi/ui_set_icon_response.cc
+./src/commands/hmi/ui_set_media_clock_timer_request.cc
+./src/commands/hmi/ui_set_media_clock_timer_response.cc
+./src/commands/hmi/ui_show_request.cc
+./src/commands/hmi/ui_show_response.cc
+./src/commands/hmi/ui_show_vr_help_request.cc
+./src/commands/hmi/ui_show_vr_help_response.cc
+./src/commands/hmi/vi_is_ready_request.cc
+./src/commands/hmi/vi_is_ready_response.cc
+./src/commands/hmi/vi_read_did_request.cc
+./src/commands/hmi/vi_read_did_response.cc
+./src/commands/hmi/vi_get_vehicle_data_request.cc
+./src/commands/hmi/vi_get_vehicle_data_response.cc
+./src/commands/hmi/vi_get_dtcs_request.cc
+./src/commands/hmi/vi_get_dtcs_response.cc
+./src/commands/hmi/vi_get_vehicle_type_request.cc
+./src/commands/hmi/vi_get_vehicle_type_response.cc
+./src/commands/hmi/navi_is_ready_request.cc
+./src/commands/hmi/navi_is_ready_response.cc
+./src/commands/hmi/navi_alert_maneuver_request.cc
+./src/commands/hmi/navi_alert_maneuver_response.cc
+./src/commands/hmi/navi_update_turn_list_request.cc
+./src/commands/hmi/navi_update_turn_list_response.cc
+./src/commands/hmi/navi_show_constant_tbt_request.cc
+./src/commands/hmi/navi_show_constant_tbt_response.cc
+./src/commands/hmi/on_ready_notification.cc
+./src/commands/hmi/on_system_context_notification.cc
+./src/commands/hmi/on_device_chosen_notification.cc
+./src/commands/hmi/on_update_device_list.cc
+./src/commands/hmi/on_app_registered_notification.cc
+./src/commands/hmi/on_app_unregistered_notification.cc
+./src/commands/hmi/on_driver_distraction_notification.cc
+./src/commands/hmi/on_play_tone_notification.cc
+./src/commands/hmi/on_vr_started_notification.cc
+./src/commands/hmi/on_vr_stopped_notification.cc
+./src/commands/hmi/on_vr_command_notification.cc
+./src/commands/hmi/on_ui_command_notification.cc
+./src/commands/hmi/on_navi_tbt_client_state_notification.cc
+./src/commands/hmi/on_app_deactivated_notification.cc
+./src/commands/hmi/on_tts_language_change_notification.cc
+./src/commands/hmi/on_vr_language_change_notification.cc
+./src/commands/hmi/on_ui_language_change_notification.cc
+./src/commands/hmi/on_button_event_notification.cc
+./src/commands/hmi/on_button_press_notification.cc
+./src/commands/hmi/on_show_notification.cc
+./src/commands/hmi/on_vi_vehicle_data_notification.cc
+./src/commands/hmi/on_find_applications.cc
+)
+
+add_library("ApplicationManager" ${SOURCES} ${MOBILE_COMMANDS_SOURCES} ${HMI_COMMANDS_SOURCES} ${POLICIES_MANAGER} ${EVENT_ENGINE})
+target_link_libraries ("ApplicationManager" log4cxx)

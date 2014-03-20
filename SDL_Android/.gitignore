@@ -1,0 +1,7 @@
+*~
+bin
+obj
+gen
+libs
+local.properties
+*.so
